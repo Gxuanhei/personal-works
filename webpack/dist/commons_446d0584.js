@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[0],[,function(module,__webpack_exports__,__webpack_require__){"use strict";eval("/* unused harmony export common */\nfunction common() {\n  return 'common module';\n}\n\n//# sourceURL=webpack:///./common/index.js?")}]]);

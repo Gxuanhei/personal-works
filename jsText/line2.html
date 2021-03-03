@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>选中Canvas中的直线</title>
+</head>
+<body>
+<canvas id="myCanvas">Your browser does not support HTML5 Canvas. </canvas>
+</body>
+</html>
+<script type="text/javascript">
+    var myCanvas = document.getElementById("myCanvas");
+    myCanvas.style.cssText = "position:absolute;left:0;top:0; border: 1px solid #ccc;"; // 画布样式
+    myCanvas.width = 800;   // 画布的宽度
+    myCanvas.height = 800;  // 画布的高度
+    var ctx = myCanvas.getContext('2d');
+
+    var a = 300, b = 300;   // 原点
+    var lines = [
+        { p1: { x: a, y: b }, p2: { x: a + 200, y: b }, flag: 0, },       // 原点右移200px;
+        { p1: { x: a, y: b }, p2: { x: a, y: b - 200 }, flag: 0 },        // 原点上移200px;
+        { p1: { x: a, y: b }, p2: { x: a - 200, y: b }, flag: 0 },        // 原点左移200px;
+        { p1: { x: a, y: b }, p2: { x: a, y: b + 200 }, flag: 0 },        // 原点下移200px;
+        { p1: { x: a, y: b }, p2: { x: a + 100, y: b - 80 }, flag: 0 },   // 第1象限
+        { p1: { x: a, y: b }, p2: { x: a - 100, y: b - 100 }, flag: 0 },  // 第2象限
+        { p1: { x: a, y: b }, p2: { x: a - 100, y: b + 100 }, flag: 0 },  // 第3象限
+        { p1: { x: a, y: b }, p2: { x: a + 100, y: b + 80 }, flag: 0 },   // 第4象限
+        { p1: { x: 100, y: 580 }, p2: { x: 200, y: 550 }, flag: 0 },
+        { p1: { x: 200, y: 580 }, p2: { x: 300, y: 600 }, flag: 0 },
+        { p1: { x: 80, y: 520 }, p2: { x: 10, y: 450 }, flag: 0 },
+        { p1: { x: 10, y: 490 }, p2: { x: 60, y: 480 }, flag: 0 },
+    ];
+
+    // 画线
+    drawAllLines();
+
+    // Click 事件
+    myCanvas.onclick = function (e) {
+        // 鼠标点击的坐标
+        var px = e.clientX,
+            py = e.clientY;
+
+        // 逐条线确定是否有点中
+        var offset = 5;                         // 可接受（偏移）范围
+        for (var i = 0; i < lines.length; i++) {
+            var p1 = lines[i].p1;               // 直线起点
+            var p2 = lines[i].p2;               // 直线终点
+            var flag = 0;                       // 1 - 点中
+            var minX = Math.min(p1.x, p2.x);    // 较小的X轴坐标值
+            var maxX = Math.max(p1.x, p2.x);    // 较大的X轴坐标值
+            var minY = Math.min(p1.y, p2.y);    // 较小的Y轴坐标值
+            var maxY = Math.max(p1.y, p2.y);    // 较大的Y轴坐标值
+            console.log(minX,maxX,minY,maxY)
+            if (p1.y === p2.y) {
+                // 水平线
+                if ((px >= minX && px <= maxX) && (py >= minY - offset && py <= maxY + offset)) {
+                    flag = 1;
+                    lines[i].crossPoint = { x: px, y: p1.y };         // 直线上交叉点
+                }
+
+            }
+            else if (p1.x === p2.x) {
+                // 垂直线
+                if ((py >= minY && py <= maxY) && (px >= minX - offset && px <= maxX + offset)) {
+                    flag = 1;
+                    lines[i].crossPoint = { x: p1.x, y: py };       // 直线上交叉点
+                }
+            }
+            else {
+                // 斜线 (先判断点是否进入可接受大范围(矩形)，然后再根据直线上的交叉点进行小范围比较)
+                if ((px >= minX && px <= maxX) && (py >= minY - offset && py <= maxY + offset)) {
+                    //求Y轴坐标
+                    //方法1：根据tanθ= y/x = y1/x1, 即y = (y1/x1)*x  (该方法有局限性，垂直线(p2.x - p1.x)=0，不能用)
+                    //var y = ((p2.y - p1.y) / (p2.x - p1.x)) * (px - p1.x);
+
+                    //方法2：先求弧度hudu，根据cosθ=x/r, r=x/cosθ,求得r，再根据sinθ=y/r, y=sinθ*r, 求得y
+                    var hudu = Math.atan2(p2.y - p1.y, p2.x - p1.x);        // 直线的弧度(倾斜度)
+                    // 用三角函数计出直线上的交叉点
+                    var r = (px - p1.x) / Math.cos(hudu);                   // 直角三角形的斜边（或理解成圆的半径）
+                    var y = Math.sin(hudu) * r;                             // Y轴坐标
+
+                    var p = { x: px, y: p1.y + y };                         // 直线上的交叉点
+                    if ((Math.abs(px - p.x) <= offset) && (Math.abs(py - p.y) <= offset)) {
+                        flag = 1;                                           // 1 - 点中
+                    }
+                    lines[i].crossPoint = p;                                // 直线上的交叉点
+                }
+            }
+
+            if (flag === 1) {
+                lines[i].flag = ((lines[i].flag + 1) % 2);                  // 0、1切换
+                break;
+            }
+        }
+        // 重画线
+        drawAllLines();
+    };
+
+    // 画所有线函数
+    function drawAllLines() {
+        // 清空画布
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+        // 画出逐条线
+        for (var i = 0; i < lines.length; i++) {
+            var color = lines[i].flag === 1 ? "orange" : "blue";
+
+            drawLine(ctx, lines[i].p1, lines[i].p2, color);
+
+            // 画交叉点
+            if (lines[i].crossPoint) {
+                drawPoint(lines[i].crossPoint.x, lines[i].crossPoint.y);
+            }
+            lines[i].crossPoint = null;
+        }
+    }
+
+    // 画单条线函数
+    function drawLine(ctx, p1, p2, color) {
+        color = color || 'blue';
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+        ctx.closePath();
+
+        // 计算弧度
+        var hudu = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+        var msg = "x:" + p2.x + " y:" + p2.y + " 弧度：" + hudu + " (rad)";
+        // 线长
+        var l1 = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+        msg = msg + " 线长: " + l1;
+
+        ctx.fillText(msg, p2.x, p2.y);
+    }
+
+    // 画圆点
+    function drawPoint(x, y, color) {
+        color = color || 'red';
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+    }
+</script>

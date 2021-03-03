@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>line </title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    .box {
+        position: relative;
+    }
+</style>
+<body>
+<div class="box">
+    <canvas id="cvs-line" width="500" height="500"></canvas>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        let c = document.getElementById("cvs-line");
+        let ctx = c.getContext("2d");
+        ctx.background = 'red'
+        ctx.moveTo(0, 0);
+        ctx.lineTo(400, 400);
+        ctx.stroke();
+        // ctx.closePath();
+
+        ctx.save();
+        //异次元空间 重置原点,默认是画布的(0,0)点
+        ctx.translate(20, 20);
+        //设置旋转角度  参数时弧度 角度0--360 弧度=角度*Math.PI/180
+        ctx.rotate(-30 * Math.PI / 180);
+        //旋转一个线段
+        // ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(10, 180);
+        ctx.stroke();
+    }
+</script>
+</body>
+</html>

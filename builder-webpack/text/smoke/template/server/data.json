@@ -1,0 +1,87 @@
+{
+  "code": 200,
+  "msg": "获取用户列表成功",
+  "data": {
+    "list": [
+      {
+        "created_at": "2020-08-01",
+        "id": 1,
+        "reg_count": "15012345678",
+        "username": "哈哈哈",
+        "password": "$2a$10$286Sfg5Tb1TUILgHm81TI.hUAGETS0DeAM8UzDLicrgVtQsgiKxga",
+        "email": "123@qq.com",
+        "user_picture": "http://106.15.249.138:3000/uploads/1596280304020.jpg",
+        "level": 1,
+        "updated_at": "2020-08-04T09:28:36.000Z",
+        "deleted_at": null
+      },
+      {
+        "created_at": "2020-08-01",
+        "id": 2,
+        "reg_count": "18094151111",
+        "username": "嘿嘿嘿",
+        "password": "$2a$10$LD5iMNwWZqaYUGbaj0ER0eLkWRSw2zQFxUEYznZMqQqKsVdz3ErQO",
+        "email": "123@qq.com",
+        "user_picture": "http://106.15.249.138:3000/uploads/1596280304020.jpg",
+        "level": 0,
+        "updated_at": "2020-09-19T13:01:48.000Z",
+        "deleted_at": null
+      },
+      {
+        "created_at": "2020-08-01",
+        "id": 3,
+        "reg_count": "18515120566",
+        "username": "哈哈哈",
+        "password": "$2a$10$UoroAErc5pj/AkAfXuS/Ye75dYczC2S2r.hnsplJ9I/LvbulQ4myu",
+        "email": "123@qq.com",
+        "user_picture": "http://106.15.249.138:3000/uploads/1596280304020.jpg",
+        "level": 1,
+        "updated_at": "2020-08-01T11:10:37.000Z",
+        "deleted_at": null
+      },
+      {
+        "created_at": "2020-08-05",
+        "id": 4,
+        "reg_count": "18066666666",
+        "username": "请问",
+        "password": "$2a$10$53CBJ8oT.PjJyqF7Vy8/pO4EoynkCrpefUYoKBASUVlVAmR.hktfy",
+        "email": "2312@eq.cw",
+        "user_picture": "http://106.15.249.138:3000/uploads/1596609255230.jpg",
+        "level": 1,
+        "updated_at": "2020-08-05T06:34:39.000Z",
+        "deleted_at": null
+      },
+      {
+        "created_at": "2020-08-16",
+        "id": 5,
+        "reg_count": "15511111111",
+        "username": "ee",
+        "password": "$2a$10$vxCKH8g7BXCMEGXHywkJouSHz42M9Mm1y3U7kFCXfGI1P51Am/.nm",
+        "email": "58@w.cqw",
+        "user_picture": "http://106.15.249.138:3000/uploads/2020-8-16/1597556972144.jpg",
+        "level": 0,
+        "updated_at": "2020-08-16T07:54:02.000Z",
+        "deleted_at": null
+      },
+      {
+        "created_at": "2020-08-16",
+        "id": 6,
+        "reg_count": "18066666662",
+        "username": "qwee",
+        "password": "$2a$10$tbJgS1R047mnZz4EyY/EmOid0SaTngfhGijcIqTuVKEUAmi7us9sa",
+        "email": "863@we.con",
+        "user_picture": "http://106.15.249.138:3000/uploads/2020-8-16/1597557298069.jpg",
+        "level": 1,
+        "updated_at": "2020-09-19T13:01:42.000Z",
+        "deleted_at": null
+      }
+    ],
+    "meta": {
+      "current_page": 1,
+      "per_page": 10,
+      "count": 6,
+      "total": 6,
+      "total_pages": 1
+    }
+  }
+}

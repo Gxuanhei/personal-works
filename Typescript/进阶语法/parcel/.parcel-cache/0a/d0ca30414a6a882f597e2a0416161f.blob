@@ -1,0 +1,6 @@
+const teacher = 'dell';
+console.log(teacher);
+$(function () {
+  alert('123');
+  console.log('123');
+});

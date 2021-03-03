@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>判断线段相交并求交点</title>
+    <style>
+        .title{text-align:center;}
+        .wrapper{width: 500px;height: 500px;margin: 0 auto;border: 1px solid #000000;}
+        .content{position: relative;height: 500px;}
+        .dot{position: absolute;width:1px;height: 1px;overflow: hidden;font-size:0;line-height: 0; background: #333;}
+
+    </style>
+</head>
+<body>
+<h1 class="title">判断相交并求交点</h1>
+<div class="wrapper">
+    <div class="content" id="content"></div>
+
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script>
+    //*********定义加载模块方法  start **************//
+    (function (window, undefined) {
+        if (window.define) {
+            return
+        }
+        function isFunction(obj) {
+            return Object.prototype.toString.call(obj) === "[object Function]"
+        }
+
+        var MM = {};
+        var initModuleName = "initRun";
+
+        function require(name) {
+            if (!MM[name]) {
+                throw new Error("Module " + name + " is not defined.")
+            }
+            var module = MM[name];
+            if (module.inited === false) {
+                runModule(name)
+            }
+            return module.ret
+        }
+
+        function runModule(name) {
+            var exports = {};
+            var module = MM[name];
+            if (isFunction(MM[name].factory)) {
+                var ret = MM[name].factory.apply(undefined, [require, exports, undefined]);
+                module.ret = ret === undefined ? exports : ret
+            } else {
+                module.ret = MM[name].factory
+            }
+            module.inited = true
+        }
+
+        function define(name, deps, factory) {
+            if (MM[name]) {
+                throw new Error("Module " + name + " has been defined already.")
+            }
+            if (isFunction(deps)) {
+                factory = deps
+            }
+            MM[name] = {factory:factory, inited:false};
+            if (name === initModuleName) {
+                runModule(name)
+            }
+        }
+
+        window.define = define
+    })(window);
+    //*********定义加载模块方法 end **************//
+    (function(){
+        /**
+         * 可以缓存的操作节点
+         */
+        var $dom = {
+            content : $('#content')
+        }
+        define('Mode/drawLine',function(require){
+            var drawLine = function(){};
+            drawLine.prototype = {
+                /**
+                 * @根据两坐标画线段
+                 * @param vector1
+                 * @param vector2
+                 */
+                draw : function(vector1 ,vector2){
+                    var k = (vector2.y - vector1.y)/((vector2.x - vector1.x));//求斜率k
+                    var y,x ;_lineHtml = [];//用来保存xy变量坐标
+                    var maxX = Math.max(vector2.x,vector1.x),
+                        minX = Math.min(vector2.x,vector1.x),
+                        maxY = Math.max(vector2.y,vector1.y),
+                        minY = Math.min(vector2.y,vector1.y);
+
+                    //利用长度相隔比较大的作为循环确保画的线段质量高些
+                    if((maxX-minX) > (maxY - minY) || (maxX-minX) == (maxY - minY)){
+                        for(var i = minX;i<maxX;i++){
+                            y = k * (i -  vector1.x) +  vector1.y;
+                            _lineHtml.push('<div class="dot" style="left:'+ i +'px;top:'+ y +'px"></div>');
+
+                        }
+
+                    }else{
+                        for(var i = minY;i<maxY;i++){
+                            x = (i -  vector1.y)/k +  vector1.y;
+                            _lineHtml.push('<div class="dot" style="left:'+ x +'px;top:'+ i +'px"></div>');
+
+                        }
+
+                    }
+
+                    $dom.content.append(_lineHtml.join('')) ;
+
+                } ,
+                /**
+                 * @desc求交点坐标具体算法见http://www.cnblogs.com/rubyxie/articles/3548450.html
+                 * @param vector1
+                 * @param vector2
+                 * @param vector3
+                 * @param vector4
+                 * @return {Object}交点坐标
+                 */
+                computeCrossVector : function (vector1 ,vector2,vector3 ,vector4){
+                    var crossVector = {},
+                        v1 = {"x" : vector2.x - vector1.x , "y" : vector2.y - vector1.y},
+                        v2 = {"x" : vector4.x - vector3.x , "y" : vector4.y - vector3.y};
+                    var product = v1.x * v2.y - v1.y * v2.x; //两向量的乘积
+                    //计算二阶行列式的两个常数项
+                    var const1 = vector1.x * v1.y - vector1.y * v1.x ;
+                    const2 = vector3.x * v2.y - vector3.y * v2.x ;
+
+                    crossVector.x = (const2 * v1.x - const1 * v2.x)/product;
+                    crossVector.y = (const2 * v1.y - const1 * v2.y)/product;
+
+                    return crossVector;
+
+                }
+                ,
+                //向量叉乘
+                crossMul: function (v1, v2) {
+                    return v1.x * v2.y - v1.y * v2.x;
+                }
+                ,
+                checkLineCross : function(vector1 ,vector2,vector3 ,vector4){
+
+                    var v1 = {x: vector1.x - vector3.x, y: vector1.y - vector3.y},
+                        v2 = {x: vector2.x - vector3.x, y: vector2.y - vector3.y},
+                        v3 = {x: vector4.x - vector3.x, y: vector4.y - vector3.y},
+                        v = this.crossMul(v1, v3) * this.crossMul(v2, v3),
+                        v1 = {x: vector3.x - vector1.x, y: vector3.y - vector1.y},
+                        v2 = {x: vector4.x - vector1.x, y: vector4.y - vector1.y},
+                        v3 = {x: vector2.x - vector1.x, y: vector2.y - vector1.y};
+
+                    return (v <= 0 && this.crossMul(v1, v3) * this.crossMul(v2, v3) <= 0) ? true : false;
+
+                }
+
+            };
+            return drawLine;
+
+        });
+
+        /**
+         * @desc 模块启动函数
+         */
+        define('initRun',function(require){
+            var vector1 = {"x" :50 ,"y":100 },  //定义四个向量坐标
+                vector2 = {"x" :180 ,"y":400 },
+                vector3 = {"x" :10 ,"y":104 },
+                vector4 = {"x" :200 ,"y":104 };
+
+            var drawMode = require("Mode/drawLine");
+            var line = new drawMode;
+
+            line.draw(vector1,vector2);
+            line.draw(vector3,vector4);
+
+            if(line.checkLineCross(vector1,vector2,vector3,vector4)){
+                var cross = line.computeCrossVector(vector1,vector2,vector3,vector4);
+                $dom.content.append('<div>交点坐标为：x坐标为 '+ cross.x +  ' y坐标 ：'+cross.y+'</div>');
+
+
+            }else{
+                alert("这两向量线段未相交");
+            }
+        })
+
+    })();
+</script>
+</body>
+</html>
