@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 预编译
+        // 1.检查通篇的语法错误 ==> 先不执行，如果有错则全部不执行，在编译之前
+        // 1.5.预编译的过程
+        // 2.解释一行，执行一行
+
+        // 函数声明会先被提升到本作用域顶部，
+        // test();
+
+        // function test() {
+        //     console.log(1);
+        // }
+
+        // // 函数声明整体提升，变量只有声明提升，赋值是不提升
+        // console.log(a); // 此时a为undefined并不是not defined   因为是编译的时候a只是声明提升，值并没有提升
+
+        // var a = 1;
+
+        // 按时全局变量 imply global variable 
+
+
+        // 函数上下文                                       2               func        1    
+        // 函数内部先在函数上下文，先把a设置为undefined -> 找到形参 -> 找到函数声明 -> 赋值操作
+        // 1.寻找形参和变量声明 先找到形参a，然后形参赋值，然后到function a覆盖形参，然后到
+        // 2.实参赋值给形参
+        // 3.找到函数声明，赋值 // 前三步是预编译，代码还未被执行，a未被代码赋值
+        // 执行
+        // function test(a) {
+        //     console.log(a); // function a(){} 此处是因为这个地方函数是一等公民，形参虽然被声明了但是被
+        //     var a = 1;
+        //     console.log(a); // 1 这个地方因为变量已经声明，覆盖了函数声明了，并且赋值了
+
+        //     function a() {} // 1
+        //     console.log(a);
+        //     var b = function() {
+        //         console.log(b);
+        //     }
+        //     var d = function() {}
+        // }
+
+        // test(2);
+
+        // AO activation object
+        // 活跃对象函数上下文
+        // AO = {
+        //  a:undefined -> 2
+        //   function a(){}
+        //,
+        //  b:undefined  
+        //}
+
+        // var a;
+        // console.log(a);
+
+        // function a() {
+        //     console.log(2);
+        // }
+        // console.log(a);
+
+        /**
+         * AO = {
+         * a:undefined -> function a(){}
+         * }
+         * 
+         * */
+        // var A = {
+        //     n: 4399
+        // };
+        // var B = function() {
+        //     this.n = 9999;
+        // }
+        // var C = function() {
+        //     var n = 8888;
+        // }
+        // console.log(B.prototype);
+        // console.log(C.prototype);
+        // B.prototype = A;
+        // console.log(B.prototype);
+        // console.log(B);
+        // C.prototype = A;
+        // console.log(C.prototype);
+        // console.log(C);
+        // var b = new B();
+        // var c = new C();
+        // A.n++;
+        // console.log(b.n);
+        // console.log(c.n);
+
+        // var a, b;
+        // (function() {
+        //     alert(a);
+        //     alert(b);
+        //     var a = b = 3;
+        //     alert(a);
+        //     alert(b);
+        // })();
+        // alert(a);
+        // alert(b);
+
+        // function test() {
+        //     a = 1;
+
+        //     function a() {}
+        //     var a = 2;
+        //     return a;
+        // }
+
+        // console.log(test());
+    </script>
+</body>
+
+</html>

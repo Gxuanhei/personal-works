@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        console.log(middleSearch(6, [1, 2, 5, 6, 7])); //2
+
+        function middleSearch(searchValue, arr, startIndex, endIndex) {
+
+            const len = arr.length;
+            endIndex = endIndex || len - 1;
+            startIndex = startIndex || 0;
+            const middleIndex = Math.floor((startIndex + endIndex) / 2)
+            if (startIndex > endIndex) return;
+            if (arr[middleIndex] === searchValue) {
+                return middleIndex;
+            } else if (arr[middleIndex] > searchValue) {
+                return middleSearch(searchValue, arr, startIndex, middleIndex - 1);
+            } else {
+                return middleSearch(searchValue, arr, middleIndex + 1, endIndex);
+            }
+        }
+    </script>
+</body>
+
+</html>

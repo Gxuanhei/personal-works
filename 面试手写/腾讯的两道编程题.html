@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        // 找出腾讯要闻中第一条新闻的内容
+        // function getFirst() {
+        //     const importantNews = document.querySelector("#tab-news-01");
+        //     const ul = [...importantNews.querySelectorAll("ul")];
+        //     console.log(ul)
+        //     const li = [...ul[0].querySelectorAll('.news-top')];
+        //     console.log(li)
+        //     const first = li[0];
+        //     console.log(first.innerText)
+        //     return first;
+        // }
+
+        // 找出下面字符串中连续数字中最大的数
+        let val = '121asdasd155dasd5454f8ad4f484sa5f5s4f8445asf545454safa';
+        let valArr = val.split('');
+        let newArr = [];
+        let str = '';
+        console.log(valArr);
+        valArr.forEach((item, index) => {
+            if (!isNaN(item)) {
+                str = str ? str * 10 + Number(item) : str + item;
+                str = '' + str;
+            } else {
+                str ? newArr.push(str) : '';
+                str = '';
+            }
+
+        });
+        console.log(newArr);
+        newArr.sort((a, b) => {
+            return b - a;
+        })
+        console.log(newArr[0]);
+    </script>
+
+</body>
+
+</html>

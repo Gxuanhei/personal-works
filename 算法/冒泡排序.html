@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [3, 4, 1, 2];
+
+        function sortArr(arr) {
+            const len = arr.length;
+            for (let i = 0; i < len; i++) {
+                for (let j = 0; j < len - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        const temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+        }
+
+        sortArr(arr);
+        arr.reverse();
+        const str = "123456";
+        const newStr = str.split('').reverse().join('');
+        console.log(arr);
+        console.log(newStr);
+
+
+        // function multiply(num1, num2) {
+        //     if (isNaN(num1) || isNaN(num2)) return '';
+        //     if (num1 == 0 || num2 == 0) return '0';
+        //     let len1 = num1.length,
+        //         len2 = num2.length;
+        //     let result = [];
+        //     for (let i = len1 - 1; i >= 0; i--) {
+        //         for (let j = len2 - 1; j >= 0; j--) {
+        //             const index1 = i + j,
+        //                 index2 = i + j + 1;
+        //             const middle = num1[i] * num2[j] + (result[index2] || 0);
+        //             result[index2] = middle % 10;
+        //             result[index1] = Math.floor(middle / 10) + (result[index1] || 0);
+
+        //         }
+        //     }
+
+        //     return result.join('').replace(/^0+/, '');
+
+        // }
+
+        // console.log(multiply('0', '0'))
+    </script>
+</body>
+
+</html>

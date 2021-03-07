@@ -11,19 +11,19 @@
             margin: 0;
             padding: 0;
         }
-
+        
         .canvas-box {
             position: relative;
         }
-
+        
         canvas {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
-
+        
         #tx {
             padding-left: 20px;
         }
-
+        
         #btn {
             width: 130px;
             height: 50px;
@@ -31,22 +31,23 @@
         }
     </style>
 </head>
+
 <body>
 
 
-<div class="canvas-box">
-    <canvas id="cvs" width="600" height="600" style="background: #eee"></canvas>
-</div>
-<p id="tx"></p>
-<button id="btn">点击生成随机线段</button>
-</body> 
+    <div class="canvas-box">
+        <canvas id="cvs" width="600" height="600" style="background: #eee"></canvas>
+    </div>
+    <p id="tx"></p>
+    <button id="btn">点击生成随机线段</button>
+</body>
 
 
 <script>
-    window.onload = function () {
+    window.onload = function() {
         generateCvs();
         let btn = document.getElementById('btn');
-        btn.onclick = function () {
+        btn.onclick = function() {
             generateCvs()
         }
     }
@@ -66,10 +67,27 @@
         let y21 = Math.round(Math.random() * 500);
         let x22 = Math.round(Math.random() * 500);
         let y22 = Math.round(Math.random() * 500);
-        let lines = [
-            {p1: {x: x11, y: y11}, p2: {x: x12, y: y12}, flag: 0,},
-            {p1: {x: x21, y: y21}, p2: {x: x22, y: y22}, flag: 0,}
-        ]
+        let lines = [{
+            p1: {
+                x: x11,
+                y: y11
+            },
+            p2: {
+                x: x12,
+                y: y12
+            },
+            flag: 0,
+        }, {
+            p1: {
+                x: x21,
+                y: y21
+            },
+            p2: {
+                x: x22,
+                y: y22
+            },
+            flag: 0,
+        }]
 
         // 交点
         let Interset;
@@ -113,20 +131,20 @@
         let fns = [line_1, line_2];
         // // 监听鼠标事件
 
-        cvs.onclick = function (e) {
+        cvs.onclick = function(e) {
             // 得到鼠标的坐标
             let clientX = e.clientX
             let clientY = e.clientY;
             // 清楚矩形内像素
             ctx.clearRect(0, 0, 500, 500)
 
-            let offset = 5;                         // 可接受（偏移）范围
+            let offset = 5; // 可接受（偏移）范围
             for (let i = fns.length; i--;) {
                 // 遍历绘制图形
                 let flag = 0
-                // 此处计算是是否选中参考至 https://blog.csdn.net/chelen_jak/article/details/80593166
-                //方法1：根据tanθ= y/x = y1/x1, 即y = (y1/x1)*x  (该方法有局限性，垂直线(p2.x - p1.x)=0，不能用)
-                //var y = ((p2.y - p1.y) / (p2.x - p1.x)) * (px - p1.x);
+                    // 此处计算是是否选中参考至 https://blog.csdn.net/chelen_jak/article/details/80593166
+                    //方法1：根据tanθ= y/x = y1/x1, 即y = (y1/x1)*x  (该方法有局限性，垂直线(p2.x - p1.x)=0，不能用)
+                    //var y = ((p2.y - p1.y) / (p2.x - p1.x)) * (px - p1.x);
 
                 //方法2：先求弧度hudu，根据cosθ=x/r, r=x/cosθ,求得r，再根据sinθ=y/r, y=sinθ*r, 求得y
 
@@ -139,24 +157,27 @@
                 // if ((Math.abs(px - p.x) <= offset) && (Math.abs(py - p.y) <= offset)) {
                 //     flag = 1;                                           // 1 - 点中
                 // }
-                let round = Math.atan2(lines[i].p1.y - lines[i].p2.y, lines[i].p1.x - lines[i].p2.x);        // 直线的弧度(倾斜度)
+                let round = Math.atan2(lines[i].p1.y - lines[i].p2.y, lines[i].p1.x - lines[i].p2.x); // 直线的弧度(倾斜度)
                 // 用三角函数计出直线上的交叉点
-                let r = (clientX - lines[i].p2.x) / Math.cos(round);                   // 直角三角形的斜边（或理解成圆的半径）
+                let r = (clientX - lines[i].p2.x) / Math.cos(round); // 直角三角形的斜边（或理解成圆的半径）
                 // console.log(round)
-                let y = Math.sin(round) * r;                             // Y轴坐标
+                let y = Math.sin(round) * r; // Y轴坐标
 
-                let p = {x: clientX, y: lines[i].p2.y + y};
+                let p = {
+                    x: clientX,
+                    y: lines[i].p2.y + y
+                };
                 // console.log(clientX,clientY)
                 // console.log(p)
 
                 // 直线上的交叉点
                 if ((Math.abs(clientX - p.x) <= offset) && (Math.abs(clientY - p.y) <= offset)) {
                     console.log('选中');
-                    flag = 1;                                           // 1 - 点中
+                    flag = 1; // 1 - 点中
                 }
                 console.log(lines)
                 if (flag === 1) {
-                    lines[i].flag = ((lines[i].flag + 1) % 2);                  // 0、1切换
+                    lines[i].flag = ((lines[i].flag + 1) % 2); // 0、1切换
                 }
 
                 // 很难选中线段 但对绘制图形的选中较为友好
@@ -177,7 +198,7 @@
 
         // 判断是否平行
         function isParallel() {
-            let k1 = Math.atan2(lines[0].p1.y - lines[0].p2.y, lines[0].p1.x - lines[0].p2.x);        // 直线的弧度(k)
+            let k1 = Math.atan2(lines[0].p1.y - lines[0].p2.y, lines[0].p1.x - lines[0].p2.x); // 直线的弧度(k)
             let k2 = Math.atan2(lines[1].p1.y - lines[1].p2.y, lines[1].p1.x - lines[1].p2.x);
             let tx = document.getElementById('tx')
             let p1 = lines[0].p1
@@ -205,50 +226,69 @@
     }
 
     //  计算向量叉乘
-    let crossMul = function (v1, v2) {
-        return v1.x * v2.y - v1.y * v2.x;
-    }
-    //判断两条线段是否相交
-    let checkCross = function (p1, p2, p3, p4) {
-        let v1 = {x: p1.x - p3.x, y: p1.y - p3.y},
-            v2 = {x: p2.x - p3.x, y: p2.y - p3.y},
-            v3 = {x: p4.x - p3.x, y: p4.y - p3.y},
-            v = crossMul(v1, v3) * crossMul(v2, v3)
-        v1 = {x: p3.x - p1.x, y: p3.y - p1.y}
-        v2 = {x: p4.x - p1.x, y: p4.y - p1.y}
-        v3 = {x: p2.x - p1.x, y: p2.y - p1.y}
-        return (v <= 0 && crossMul(v1, v3) * crossMul(v2, v3) <= 0)
+    let crossMul = function(v1, v2) {
+            return v1.x * v2.y - v1.y * v2.x;
+        }
+        //判断两条线段是否相交
+    let checkCross = function(p1, p2, p3, p4) {
+            let v1 = {
+                    x: p1.x - p3.x,
+                    y: p1.y - p3.y
+                },
+                v2 = {
+                    x: p2.x - p3.x,
+                    y: p2.y - p3.y
+                },
+                v3 = {
+                    x: p4.x - p3.x,
+                    y: p4.y - p3.y
+                },
+                v = crossMul(v1, v3) * crossMul(v2, v3)
+            v1 = {
+                x: p3.x - p1.x,
+                y: p3.y - p1.y
+            }
+            v2 = {
+                x: p4.x - p1.x,
+                y: p4.y - p1.y
+            }
+            v3 = {
+                x: p2.x - p1.x,
+                y: p2.y - p1.y
+            }
+            return (v <= 0 && crossMul(v1, v3) * crossMul(v2, v3) <= 0)
 
-    }
-    // 计算交点坐标
-    // var p1={x:100,y:100};//直线上的点p1
-    // var p2={x:200,y:100};//直线上的点p2
-    //
-    // var p3={x:0,y:300}; //直线外的点p3
-    // 线段交点参考至 https://www.jb51.net/article/90104.htm
+        }
+        // 计算交点坐标
+        // var p1={x:100,y:100};//直线上的点p1
+        // var p2={x:200,y:100};//直线上的点p2
+        //
+        // var p3={x:0,y:300}; //直线外的点p3
+        // 线段交点参考至 https://www.jb51.net/article/90104.htm
     function segmentsIntr(a, b, c, d) {
 
         /** 1 解线性方程组, 求线段交点. **/
-            // 如果分母为0 则平行或共线, 不相交
+        // 如果分母为0 则平行或共线, 不相交
         let denominator = (b.y - a.y) * (d.x - c.x) - (a.x - b.x) * (c.y - d.y);
         if (denominator === 0) {
             return false;
         }
 
         // 线段所在直线的交点坐标 (x , y)
-        let x = ((b.x - a.x) * (d.x - c.x) * (c.y - a.y)
-            + (b.y - a.y) * (d.x - c.x) * a.x
-            - (d.y - c.y) * (b.x - a.x) * c.x) / denominator;
-        let y = -((b.y - a.y) * (d.y - c.y) * (c.x - a.x)
-            + (b.x - a.x) * (d.y - c.y) * a.y
-            - (d.x - c.x) * (b.y - a.y) * c.y) / denominator;
+        let x = ((b.x - a.x) * (d.x - c.x) * (c.y - a.y) +
+            (b.y - a.y) * (d.x - c.x) * a.x -
+            (d.y - c.y) * (b.x - a.x) * c.x) / denominator;
+        let y = -((b.y - a.y) * (d.y - c.y) * (c.x - a.x) +
+            (b.x - a.x) * (d.y - c.y) * a.y -
+            (d.x - c.x) * (b.y - a.y) * c.y) / denominator;
 
         /** 2 判断交点是否在两条线段上 **/
         if (
             // 交点在线段1上
             (x - a.x) * (x - b.x) <= 0 && (y - a.y) * (y - b.y) <= 0
             // 且交点也在线段2上
-            && (x - c.x) * (x - d.x) <= 0 && (y - c.y) * (y - d.y) <= 0
+            &&
+            (x - c.x) * (x - d.x) <= 0 && (y - c.y) * (y - d.y) <= 0
         ) {
 
             // 返回交点p
