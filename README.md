@@ -18,11 +18,7 @@
 >
 > <img src="./img/home.jpg" alt="avatar" style="zoom:50%;" />
 >
->  莆田电视台报导介绍：
->
-> 本地视频：./video/莆田电视台报导介绍.mp4
->
-> 在线链接：https://m.weibo.cn/status/4591050587636151?
+> ​	
 >
 > <video width="500" height="240" controls>
 >       <source src="video/莆田电视台报导介绍.mp4" type="video/mp4">
