@@ -10,6 +10,36 @@
 
 <body>
 
+    体验正则表达式的魅力:
+
+    <script>
+        // let hd = "houdunren121asd1215das212";
+        // console.log(hd.match(/a|d/g))
+        // let tel = '010-9999999';
+        // //{7,8}==>7到8位
+        // //原子组
+        // console.log(/010|020\-\d{7,8}/.test(tel))
+        // console.log(parseInt("a"));
+        // let nums = [...hd].filter(a => !Number.isNaN(parseInt(a)));
+        // console.log(nums.join(''));
+        // console.log(hd.match(/\d/g).join(''))
+        // let div = document.querySelector('div');
+        // console.log(div);
+        // console.log("abc".replace(/\w/g));
+        //replace的第一个传参是匹配正则语句或者需要匹配的字符，第二个传参是一个回调函数可以用于过滤匹配到的数据
+        // div.innerHTML =
+        // 原子选择符
+        // [] ()
+        // let reg = /[123456]/;
+
+        let val = '121asdasd155dasd5454f8ad4f484sa5f5s4f8445asf545454safa';
+        let valArr = val.match(/\d+/g);
+        valArr.sort((a, b) => {
+            return b - a;
+        });
+        console.log(valArr[0]);
+    </script>
+
 </body>
 
 </html>
