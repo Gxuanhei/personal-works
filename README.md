@@ -21,12 +21,7 @@
 > ​ 莆田电视台报导介绍：
 >
 > <video width="500" height="240" controls>
->   <source src="video/莆田电视台报导介绍.mp4" type="video/mp4">
->   <source src="movie.ogg" type="video/ogg">
->   <source src="movie.webm" type="video/webm">
->   <object data="movie.mp4" width="320" height="240">
->     <embed src="movie.swf" width="320" height="240">
->   </object> 
+>   <source src="./video/莆田电视台报导介绍.mp4" type="video/mp4">
 > </video>
 >
 > ​ 项目截图：
