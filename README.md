@@ -19,15 +19,18 @@
 > <img src="./img/home.jpg" alt="avatar" style="zoom:50%;" />
 >
 >  莆田电视台报导介绍：
+>
 > 本地视频：./video/莆田电视台报导介绍.mp4
+>
 > 在线链接：https://m.weibo.cn/status/4591050587636151?
+>
 > <video width="500" height="240" controls>
->      <source src="video/莆田电视台报导介绍.mp4" type="video/mp4">
+>       <source src="video/莆田电视台报导介绍.mp4" type="video/mp4">
 > </video>
-> 
-> 项目截图：
-> 
-><img src="./img/给它家.jpg" alt="给它家" style="zoom: 25%;" />
+>
+>  项目截图：
+>
+> <img src="./img/给它家.jpg" alt="给它家" style="zoom: 25%;" />
 
 > 
 >
